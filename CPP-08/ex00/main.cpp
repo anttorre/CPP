@@ -6,7 +6,7 @@
 /*   By: anttorre <anttorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 14:18:13 by anttorre          #+#    #+#             */
-/*   Updated: 2024/07/25 14:41:45 by anttorre         ###   ########.fr       */
+/*   Updated: 2024/08/02 12:39:59 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ int main(int, const char**) {
 	try
 	{
 		std::vector<int>::iterator it = easyfind(numeros, 30);
-        if (it != numeros.end()) {
-            std::cout << "El valor encontrado es: " << *it << std::endl;
-        } else {
-            throw std::runtime_error("El valor no fue encontrado en el vector.");
-        }
+        if (it != numeros.end())
+            std::cout << "Value found: " << *it << std::endl;
     } catch(const std::exception& e) {
         std::cerr << e.what() << '\n';
     }
