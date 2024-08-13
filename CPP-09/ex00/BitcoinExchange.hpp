@@ -6,7 +6,7 @@
 /*   By: anttorre <anttorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:07:32 by anttorre          #+#    #+#             */
-/*   Updated: 2024/08/08 16:46:39 by anttorre         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:18:28 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <sstream>
 # include <ctime>
 # include <cstdlib>
+# define BADINPUT 1
+# define NEGATIVE 2
+# define LARGENUMBER 3
+# define BADDATE 4
 
 class BitcoinExchange
 {
@@ -27,7 +31,9 @@ class BitcoinExchange
 		void	savedb(std::string db);
 		bool	check_file(std::string f);
 		time_t makeDate(const std::string& fechaStr);
-		void	check_date(time_t t, int *f);
+		void	checkDateValue(std::string date, std::string value, int *f);
+		bool	checkDay(std::string y, std::string m, std::string d);
+		void	getDataValue(std::string date, std::string value, int *f);
 	
     public:
         BitcoinExchange();
@@ -47,18 +53,10 @@ class BitcoinExchange
 		{
 			const char * what() const throw();
 		};
+		class BadDate : public std::exception
+		{
+			const char * what() const throw();
+		};
 };
-
-static std::string trim(const std::string& str) {
-    std::string::const_iterator start = str.begin();
-    while (start != str.end() && std::isspace(*start)) {
-        ++start;
-    }
-    std::string::const_iterator end = str.end();
-    do {
-        --end;
-    } while (end != start && std::isspace(*end));
-    return std::string(start, end + 1);
-}
 
 #endif
