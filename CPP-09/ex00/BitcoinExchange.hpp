@@ -6,7 +6,7 @@
 /*   By: anttorre <anttorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:07:32 by anttorre          #+#    #+#             */
-/*   Updated: 2024/08/13 16:18:28 by anttorre         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:38:29 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ class BitcoinExchange
 		void	checkDateValue(std::string date, std::string value, int *f);
 		bool	checkDay(std::string y, std::string m, std::string d);
 		void	getDataValue(std::string date, std::string value, int *f);
+		bool validDouble(std::string v);
 	
     public:
         BitcoinExchange();

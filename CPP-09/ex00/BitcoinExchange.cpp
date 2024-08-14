@@ -6,7 +6,7 @@
 /*   By: anttorre <anttorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:19:50 by anttorre          #+#    #+#             */
-/*   Updated: 2024/08/13 16:55:18 by anttorre         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:45:19 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,30 @@ void	BitcoinExchange::checkDateValue(std::string date, std::string value, int *f
 	}
 	if (date.empty())
 		*f = 1;
+	else if (!validDouble(value))
+		*f = 1;
 	else if (value.empty())
 		*f = 1;
 	else if (!value.empty() && atof(value.c_str()) < 0)
 		*f = 2;
 	else if (!value.empty() && atof(value.c_str()) > 1000)
 		*f = 3;
+}
+
+bool BitcoinExchange::validDouble(std::string v)
+{
+	int points = 0;
+	if (v.empty())
+		return false;
+	else
+	{
+		for (size_t i = 0; i < v.length(); i++)
+			if (v[i] == '.')
+				points++;
+	}
+	if (points > 1)
+		return false;
+	return true;
 }
 
 bool	BitcoinExchange::checkDay(std::string y, std::string m, std::string d)
@@ -227,7 +245,6 @@ void	BitcoinExchange::getDataValue(std::string date, std::string value, int *f)
 		}
 		std::cerr << std::endl;
 	}
-	
 }
 
 time_t BitcoinExchange::makeDate(const std::string& fechaStr)
