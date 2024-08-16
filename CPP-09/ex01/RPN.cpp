@@ -12,6 +12,24 @@
 
 #include "RPN.hpp"
 
+static std::string trim(const std::string& str) {
+	if (str.empty()) {
+        return str;
+    }
+    std::string::size_type start = 0;
+    while (start < str.length() && std::isspace(str[start])) {
+        ++start;
+    }
+    if (start == str.length()) {
+        return "";
+    }
+    std::string::size_type end = str.length() - 1;
+    while (end > start && std::isspace(str[end])) {
+        --end;
+    }
+    return str.substr(start, end - start + 1);
+}
+
 RPN::RPN()
 {
 }
@@ -20,21 +38,22 @@ RPN::RPN(std::string s)
 {
 	if (s.empty())
 		throw EmptyString();
-	size_t i = s.find(" ");
+	std::string str = trim(s);
+	size_t i = str.find(" ");
 	size_t next;
-	std::string n1 = s.substr(0, i);
-	double n2 = atof(n1.c_str());
-	std::cout << n2 << std::endl;
-	this->_data.push(atof(n1.c_str()));
-	std::cout << n1 << std::endl;
+	std::string n1 = str.substr(0, i);
+	if (!check_values(n1))
+		throw WrongNumber();
+	if (isdigit(n1[0]))
+		this->_data.push(atoi(n1.c_str()));
 	while (i != std::string::npos)
 	{
-		next = s.find(" ", i + 1);
-		n1 = s.substr(i + 1, next - (i + 1));
+		next = str.find(" ", i + 1);
+		n1 = str.substr(i + 1, next - (i + 1));
+		if (!check_values(n1))
+			throw WrongNumber();
 		i = next;
-				
 	}
-
 }
 
 RPN::RPN(const RPN &other)
@@ -55,6 +74,18 @@ RPN& RPN::operator=(const RPN &other)
 	return *this;
 }
 
+bool RPN::check_values(std::string s)
+{
+	for (size_t i = 0; i < s.length(); i++)
+	{
+		if (s[i] < '0' || s[i] > '9' || isdigit(s[i + 1]))
+			return false;
+		else if (!isdigit(s[i]) && s[i] != '-' && s[i] != '+' && s[i] != '*' && s[i] != '/')
+			return false;
+	}
+	return true;
+}
+
 const char *RPN::EmptyString::what() const throw()
 {
 	return "Empty string.";
@@ -62,5 +93,5 @@ const char *RPN::EmptyString::what() const throw()
 
 const char *RPN::WrongNumber::what() const throw()
 {
-	return "Wrong number given.";
+	return "Wrong number/s given.";
 }

@@ -21,6 +21,7 @@ class RPN
     private:
 		std::stack<int> _data;
 		RPN();
+		bool check_values(std::string s);
     public:
 		RPN(std::string s);
         RPN(const RPN &other);
