@@ -51,7 +51,12 @@ RPN::RPN(std::string s)
 		next = str.find(" ", i + 1);
 		n1 = str.substr(i + 1, next - (i + 1));
 		if (!check_values(n1))
+		{
+			std::cout << "signos encontrados" << std::endl;
 			throw WrongNumber();
+		}
+		else if (n1 == "+" || n1 == "-" || n1 == "*" ||n1 == "/")
+			std::cout << "signos encontrados2" << std::endl;
 		i = next;
 	}
 }
@@ -78,6 +83,8 @@ bool RPN::check_values(std::string s)
 {
 	for (size_t i = 0; i < s.length(); i++)
 	{
+		if (s[i] == '-' || s[i] == '+' || s[i] == '*' || s[i] == '/')
+			break;
 		if (s[i] < '0' || s[i] > '9' || isdigit(s[i + 1]))
 			return false;
 		else if (!isdigit(s[i]) && s[i] != '-' && s[i] != '+' && s[i] != '*' && s[i] != '/')
