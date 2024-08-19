@@ -39,25 +39,22 @@ RPN::RPN(std::string s)
 	if (s.empty())
 		throw EmptyString();
 	std::string str = trim(s);
-	size_t i = str.find(" ");
+	size_t i = 0;
 	size_t next;
-	std::string n1 = str.substr(0, i);
-	if (!check_values(n1))
-		throw WrongNumber();
-	if (isdigit(n1[0]))
-		this->_data.push(atoi(n1.c_str()));
+	std::string n1;
 	while (i != std::string::npos)
 	{
-		next = str.find(" ", i + 1);
-		n1 = str.substr(i + 1, next - (i + 1));
+		next = str.find(" ", i);
+		n1 = str.substr(i, next - i);
 		if (!check_values(n1))
-		{
-			std::cout << "signos encontrados" << std::endl;
 			throw WrongNumber();
-		}
-		else if (n1 == "+" || n1 == "-" || n1 == "*" ||n1 == "/")
-			std::cout << "signos encontrados2" << std::endl;
-		i = next;
+		else if (isdigit(n1[0]))
+			this->_data.push(atoi(n1.c_str()));
+		else if (n1 == "-" || n1 == "+" || n1 == "/" || n1 == "*")
+			std::cout << "signos" << std::endl;
+		if (next == std::string::npos)
+			break;
+		i = next + 1;
 	}
 }
 
