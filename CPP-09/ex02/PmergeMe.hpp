@@ -6,7 +6,7 @@
 /*   By: anttorre <anttorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:02:18 by anttorre          #+#    #+#             */
-/*   Updated: 2024/08/19 16:55:09 by anttorre         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:13:03 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ class PmergeMe
     private:
 		std::list<int> _list;
 		std::vector<int> _vector;
-		int _len;
 		PmergeMe();
     public:
         PmergeMe(const char **argv);
@@ -33,6 +32,7 @@ class PmergeMe
         PmergeMe& operator=(const PmergeMe &other);
 		void	printNumbers();
 		int getLen() const;
+		bool check_duplicates(std::list<int>::iterator begin, std::list<int>::iterator end);
 		class EmptyString : public std::exception
 		{
 			const char * what() const throw();
@@ -46,6 +46,10 @@ class PmergeMe
 			const char * what() const throw();
 		};
 		class NegativeValue : public std::exception
+		{
+			const char * what() const throw();
+		};
+		class DuplicatedNumbers : public std::exception
 		{
 			const char * what() const throw();
 		};
