@@ -6,7 +6,7 @@
 /*   By: anttorre <anttorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:09:12 by anttorre          #+#    #+#             */
-/*   Updated: 2024/08/19 16:54:36 by anttorre         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:43:05 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int main(int argc, char const *argv[])
 {
-	clock_t start;
-	clock_t end;
-	double timeList;
-	double timeVector;
-	
 	if (argc < 2)
 	{
 		std::cerr << "Usage: ./program_name <arguments>.\nExample: ./program 5 8 6 9 2" << std::endl;
@@ -26,21 +21,26 @@ int main(int argc, char const *argv[])
 	}
 	try
 	{
+		clock_t start;
+		clock_t end;
+		double timeList;
+		double timeVector;
+		
 		PmergeMe pm(argv);
 		std::cout << "Before: ";
 		pm.printNumbers();
 		start = clock();
-		/*merge list*/
+		PmergeMeContainer<std::list<int> >(pm.getList().begin(), pm.getList().end());
 		end = clock();
-		timeList = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+		timeList = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000;
 		start = clock();
-		/*merge vector*/
+		PmergeMeContainer<std::vector<int> >(pm.getVector().begin(), pm.getVector().end());
 		end = clock();
-		timeVector = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+		timeVector = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000;
 		std::cout << "After: ";
 		pm.printNumbers();
-		std::cout << "Time to process a range of " << pm.getLen() << " elements with std::list<int> : " << timeList <<  "us" << std::endl;
-		std::cout << "Time to process a range of " << pm.getLen() << " elements with std::vector<int> : " << timeVector <<  "us" << std::endl;
+		std::cout << "Time to process a range of " << pm.getLen() << " elements with std::list<int> : " << timeList <<  " us" << std::endl;
+		std::cout << "Time to process a range of " << pm.getLen() << " elements with std::vector<int> : " << timeVector <<  " us" << std::endl;
 	}
 	catch(const std::exception& e)
 	{
@@ -48,10 +48,3 @@ int main(int argc, char const *argv[])
 	}
 	return 0;
 }
-
-/*
-Before: 3 5 9 7 4
-After: 3 4 5 7 9
-Time to process a range of 5 elements with std::[..] : 0.00031 us
-Time to process a range of 5 elements with std::[..] : 0.00014 us
-*/

@@ -6,7 +6,7 @@
 /*   By: anttorre <anttorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:02:23 by anttorre          #+#    #+#             */
-/*   Updated: 2024/08/19 17:13:30 by anttorre         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:30:00 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,11 @@ bool PmergeMe::check_duplicates(std::list<int>::iterator begin, std::list<int>::
 	{
 		std::list<int>::iterator next = it;
 		++next;
-		if (next == end)
-			break;
-		if (*it == *next)
-			return true;
+		for (std::list<int>::iterator it2 = next; it2 != end; it2++)
+		{
+			if (*it == *it2)
+				return true;
+		}
 	}
 	return false;
 }
@@ -90,6 +91,16 @@ bool PmergeMe::check_duplicates(std::list<int>::iterator begin, std::list<int>::
 int	PmergeMe::getLen() const
 {
 	return this->_list.size();
+}
+
+std::list<int>& PmergeMe::getList()
+{
+	return this->_list;
+}
+
+std::vector<int>& PmergeMe::getVector()
+{
+	return this->_vector;
 }
 
 const char *PmergeMe::EmptyString::what() const throw()
